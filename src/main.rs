@@ -1,39 +1,43 @@
 // Import our library
-use passman::errors::PassManError;
-
-// We'll use Result later, but for now let's keep it commented
-// use passman::errors::Result;
+use passman::models::{PasswordEntry, SearchFilter};
 
 fn main() {
     println!("🔐 PassMan - Secure Password Manager");
-    println!("✅ Step 1 complete - Error types are working!\n");
+    println!("✅ Step 2 complete - Data models are working!\n");
 
-    // Demonstrate error handling
-    demonstrate_errors();
+    // Demonstrate creating a password entry
+    demo_password_entry();
+
+    // Demonstrate search filters
+    demo_search_filter();
 }
 
-fn demonstrate_errors() {
-    // Test creating and displaying errors
-    let errors = vec![
-        PassManError::CryptoError("Invalid key length".to_string()),
-        PassManError::AuthenticationFailed,
-        PassManError::VaultNotFound,
-    ];
+fn demo_password_entry() {
+    println!("📝 Creating a new password entry:");
 
-    for error in errors {
-        println!("  • {}", error);
-        println!("    User-friendly: {}", error.user_message());
-        println!("    Recoverable: {}", error.is_recoverable());
-        println!();
-    }
+    let entry = PasswordEntry::new(
+        "github.com".to_string(),
+        "john_doe".to_string(),
+        vec![0x01, 0x02, 0x03], // encrypted (would be real ciphertext)
+        vec![0x04, 0x05, 0x06], // nonce
+    );
 
-    // Test the From conversion
-    let io_error = std::io::Error::new(std::io::ErrorKind::PermissionDenied, "Access denied");
-    let pass_error: PassManError = io_error.into();
-    println!("  • Converted IO error: {}", pass_error);
+    println!("  • Website: {}", entry.website);
+    println!("  • Username: {}", entry.username);
+    println!("  • Summary: {}", entry.summary());
+    println!("  • Created: {}", entry.created_at);
+    println!("  • Persisted: {}", entry.is_persisted());
+    println!();
+}
 
-    // Example of using Result (commented for now)
-    // fn test_function() -> Result<()> {
-    //     Ok(())
-    // }
+fn demo_search_filter() {
+    println!("🔍 Using search filters:");
+
+    let filter = SearchFilter::new()
+        .with_website("github")
+        .with_username("john");
+
+    println!("  • Website query: {:?}", filter.website_query);
+    println!("  • Username query: {:?}", filter.username_query);
+    println!("  • Filter active: {}", filter.is_active());
 }

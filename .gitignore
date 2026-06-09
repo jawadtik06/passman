@@ -1,0 +1,29 @@
+cat > .gitignore << 'EOF'
+# Rust
+/target/
+**/*.rs.bk
+*.pdb
+*.dll
+*.so
+*.dylib
+Cargo.lock
+
+# Passman specific
+*.db
+*.db-shm
+*.db-wal
+vault.key
+*.log
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+EOF

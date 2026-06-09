@@ -41,6 +41,10 @@ lto = true
 codegen-units = 1
 strip = true  # Remove debug symbols
 
+[lib]
+name = "passman"
+path = "src/lib.rs"
+
 [[bin]]
 name = "passman"
 path = "src/main.rs"

@@ -1,4 +1,3 @@
-cat > .gitignore << 'EOF'
 # Rust
 /target/
 **/*.rs.bk
@@ -26,4 +25,3 @@ vault.key
 # OS
 .DS_Store
 Thumbs.db
-EOF

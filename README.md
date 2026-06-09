@@ -1,4 +1,3 @@
-cat > README.md << 'EOF'
 # 🔐 PassMan - Secure Password Manager
 
 A memory-safe, encrypted password manager written in Rust.

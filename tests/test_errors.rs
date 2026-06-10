@@ -18,13 +18,34 @@ fn sample_errors() -> Vec<PassManError> {
 #[test]
 fn error_display_formats_correctly() {
     let cases = vec![
-        (PassManError::CryptoError("Invalid key".to_string()), "Cryptography error: Invalid key"),
-        (PassManError::DatabaseError("Connection failed".to_string()), "Database error: Connection failed"),
-        (PassManError::IoError("File not found".to_string()), "IO error: File not found"),
-        (PassManError::AuthenticationFailed, "Authentication failed: Wrong master password"),
-        (PassManError::VaultNotFound, "Vault not found. Run passman --init first"),
-        (PassManError::DecryptionError("Wrong nonce".to_string()), "Decryption failed: Wrong nonce"),
-        (PassManError::ClipboardError("X11 error".to_string()), "Clipboard error: X11 error"),
+        (
+            PassManError::CryptoError("Invalid key".to_string()),
+            "Cryptography error: Invalid key",
+        ),
+        (
+            PassManError::DatabaseError("Connection failed".to_string()),
+            "Database error: Connection failed",
+        ),
+        (
+            PassManError::IoError("File not found".to_string()),
+            "IO error: File not found",
+        ),
+        (
+            PassManError::AuthenticationFailed,
+            "Authentication failed: Wrong master password",
+        ),
+        (
+            PassManError::VaultNotFound,
+            "Vault not found. Run passman --init first",
+        ),
+        (
+            PassManError::DecryptionError("Wrong nonce".to_string()),
+            "Decryption failed: Wrong nonce",
+        ),
+        (
+            PassManError::ClipboardError("X11 error".to_string()),
+            "Clipboard error: X11 error",
+        ),
     ];
 
     for (error, expected) in cases {
@@ -59,7 +80,10 @@ fn result_alias_works() {
 #[test]
 fn io_error_automatically_converts() {
     fn operation() -> Result<()> {
-        Err(std::io::Error::new(std::io::ErrorKind::NotFound, "missing file"))?
+        Err(std::io::Error::new(
+            std::io::ErrorKind::NotFound,
+            "missing file",
+        ))?
     }
 
     match operation() {
@@ -96,9 +120,18 @@ fn user_message_returns_friendly_messages() {
     let cases = vec![
         (PassManError::AuthenticationFailed, "Wrong master password"),
         (PassManError::VaultNotFound, "No vault found"),
-        (PassManError::IoError("file not found".to_string()), "File not found"),
-        (PassManError::ClipboardError("error".to_string()), "Cannot access clipboard"),
-        (PassManError::CryptoError("error".to_string()), "Security error"),
+        (
+            PassManError::IoError("file not found".to_string()),
+            "File not found",
+        ),
+        (
+            PassManError::ClipboardError("error".to_string()),
+            "Cannot access clipboard",
+        ),
+        (
+            PassManError::CryptoError("error".to_string()),
+            "Security error",
+        ),
     ];
 
     for (error, expected) in cases {
@@ -110,8 +143,14 @@ fn user_message_returns_friendly_messages() {
 fn vault_not_found_behavior() {
     let error = PassManError::VaultNotFound;
 
-    assert_eq!(format!("{}", error), "Vault not found. Run passman --init first");
-    assert_eq!(error.user_message(), "No vault found. Set up a new vault first.");
+    assert_eq!(
+        format!("{}", error),
+        "Vault not found. Run passman --init first"
+    );
+    assert_eq!(
+        error.user_message(),
+        "No vault found. Set up a new vault first."
+    );
     assert!(!error.is_recoverable());
 }
 

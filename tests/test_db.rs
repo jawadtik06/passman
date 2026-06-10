@@ -17,9 +17,12 @@ fn setup_db() -> Database {
             updated_at TEXT NOT NULL
         )",
         [],
-    ).unwrap();
-    conn.execute("CREATE INDEX idx_website ON passwords(website)", []).unwrap();
-    conn.execute("CREATE INDEX idx_username ON passwords(username)", []).unwrap();
+    )
+    .unwrap();
+    conn.execute("CREATE INDEX idx_website ON passwords(website)", [])
+        .unwrap();
+    conn.execute("CREATE INDEX idx_username ON passwords(username)", [])
+        .unwrap();
     Database::from_connection(conn)
 }
 
@@ -43,7 +46,7 @@ fn insert_and_retrieve() {
     let db = setup_db();
     db.insert(&test_entry()).unwrap();
     let entries = db.get_all().unwrap();
-    
+
     assert_eq!(entries.len(), 1);
     assert_eq!(entries[0].website, "example.com");
     assert_eq!(entries[0].username, "alice");
@@ -70,7 +73,7 @@ fn update_password() {
     let db = setup_db();
     db.insert(&test_entry()).unwrap();
     let id = db.get_all().unwrap()[0].id.unwrap();
-    
+
     db.update(id, vec![9, 9, 9], vec![8, 8, 8]).unwrap();
     let updated = db.get_by_id(id).unwrap().unwrap();
     assert_eq!(updated.encrypted_password, vec![9, 9, 9]);
@@ -99,10 +102,20 @@ fn count_tracking() {
 #[test]
 fn multiple_entries() {
     let db = setup_db();
-    
-    let entry1 = PasswordEntry::new("github.com".to_string(), "user1".to_string(), vec![1, 2, 3], vec![4, 5, 6]);
-    let entry2 = PasswordEntry::new("gitlab.com".to_string(), "user2".to_string(), vec![7, 8, 9], vec![10, 11, 12]);
-    
+
+    let entry1 = PasswordEntry::new(
+        "github.com".to_string(),
+        "user1".to_string(),
+        vec![1, 2, 3],
+        vec![4, 5, 6],
+    );
+    let entry2 = PasswordEntry::new(
+        "gitlab.com".to_string(),
+        "user2".to_string(),
+        vec![7, 8, 9],
+        vec![10, 11, 12],
+    );
+
     db.insert(&entry1).unwrap();
     db.insert(&entry2).unwrap();
     assert_eq!(db.get_all().unwrap().len(), 2);

@@ -109,10 +109,22 @@ mod tests {
         let cases = vec![
             (PassManError::AuthenticationFailed, "Wrong master password"),
             (PassManError::VaultNotFound, "No vault found"),
-            (PassManError::IoError("file not found".to_string()), "File not found"),
-            (PassManError::ClipboardError("error".to_string()), "Cannot access clipboard"),
-            (PassManError::CryptoError("error".to_string()), "Security error"),
-            (PassManError::DecryptionError("error".to_string()), "Failed to decrypt"),
+            (
+                PassManError::IoError("file not found".to_string()),
+                "File not found",
+            ),
+            (
+                PassManError::ClipboardError("error".to_string()),
+                "Cannot access clipboard",
+            ),
+            (
+                PassManError::CryptoError("error".to_string()),
+                "Security error",
+            ),
+            (
+                PassManError::DecryptionError("error".to_string()),
+                "Failed to decrypt",
+            ),
         ];
 
         for (error, expected) in cases {
@@ -122,13 +134,25 @@ mod tests {
 
     #[test]
     fn error_codes() {
-        assert_eq!(PassManError::CryptoError("".to_string()).error_code(), "E001");
-        assert_eq!(PassManError::DatabaseError("".to_string()).error_code(), "E002");
+        assert_eq!(
+            PassManError::CryptoError("".to_string()).error_code(),
+            "E001"
+        );
+        assert_eq!(
+            PassManError::DatabaseError("".to_string()).error_code(),
+            "E002"
+        );
         assert_eq!(PassManError::IoError("".to_string()).error_code(), "E003");
         assert_eq!(PassManError::AuthenticationFailed.error_code(), "E004");
         assert_eq!(PassManError::VaultNotFound.error_code(), "E005");
-        assert_eq!(PassManError::DecryptionError("".to_string()).error_code(), "E006");
-        assert_eq!(PassManError::ClipboardError("".to_string()).error_code(), "E007");
+        assert_eq!(
+            PassManError::DecryptionError("".to_string()).error_code(),
+            "E006"
+        );
+        assert_eq!(
+            PassManError::ClipboardError("".to_string()).error_code(),
+            "E007"
+        );
     }
 
     #[test]
@@ -148,7 +172,10 @@ mod tests {
         assert_eq!(format!("{}", err), "Cryptography error: test");
 
         let err = PassManError::AuthenticationFailed;
-        assert_eq!(format!("{}", err), "Authentication failed: Wrong master password");
+        assert_eq!(
+            format!("{}", err),
+            "Authentication failed: Wrong master password"
+        );
     }
 
     #[test]

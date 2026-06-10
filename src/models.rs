@@ -126,7 +126,11 @@ impl SearchFilter {
         }
 
         if let Some(query) = &self.username_query {
-            if !entry.username.to_lowercase().contains(&query.to_lowercase()) {
+            if !entry
+                .username
+                .to_lowercase()
+                .contains(&query.to_lowercase())
+            {
                 return false;
             }
         }
@@ -172,12 +176,8 @@ mod tests {
 
     #[test]
     fn touch_updates_timestamp() {
-        let mut entry = PasswordEntry::new(
-            "test.com".to_string(),
-            "test".to_string(),
-            vec![1],
-            vec![2],
-        );
+        let mut entry =
+            PasswordEntry::new("test.com".to_string(), "test".to_string(), vec![1], vec![2]);
 
         let original_updated = entry.updated_at.clone();
         std::thread::sleep(std::time::Duration::from_millis(10));
@@ -189,12 +189,8 @@ mod tests {
 
     #[test]
     fn is_persisted() {
-        let mut entry = PasswordEntry::new(
-            "test.com".to_string(),
-            "test".to_string(),
-            vec![1],
-            vec![2],
-        );
+        let mut entry =
+            PasswordEntry::new("test.com".to_string(), "test".to_string(), vec![1], vec![2]);
 
         assert!(!entry.is_persisted());
         entry.id = Some(42);

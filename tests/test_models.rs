@@ -23,12 +23,8 @@ fn create_password_entry() {
 
 #[test]
 fn touch_updates_timestamp() {
-    let mut entry = PasswordEntry::new(
-        "test.com".to_string(),
-        "user".to_string(),
-        vec![1],
-        vec![2],
-    );
+    let mut entry =
+        PasswordEntry::new("test.com".to_string(), "user".to_string(), vec![1], vec![2]);
 
     let old_updated = entry.updated_at.clone();
     std::thread::sleep(std::time::Duration::from_millis(10));
@@ -40,12 +36,8 @@ fn touch_updates_timestamp() {
 
 #[test]
 fn is_persisted() {
-    let mut entry = PasswordEntry::new(
-        "test.com".to_string(),
-        "user".to_string(),
-        vec![1],
-        vec![2],
-    );
+    let mut entry =
+        PasswordEntry::new("test.com".to_string(), "user".to_string(), vec![1], vec![2]);
 
     assert!(!entry.is_persisted());
     entry.id = Some(1);

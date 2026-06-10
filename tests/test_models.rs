@@ -1,15 +1,10 @@
 //! Integration tests for PassMan data models
-//!
-//! These tests verify the public API of our models module.
 
 use passman::models::{PasswordEntry, SearchFilter, VaultConfig};
 
-// ============================================================================
 // PasswordEntry Tests
-// ============================================================================
-
 #[test]
-fn test_create_password_entry() {
+fn create_password_entry() {
     let entry = PasswordEntry::new(
         "example.com".to_string(),
         "alice@example.com".to_string(),
@@ -27,9 +22,13 @@ fn test_create_password_entry() {
 }
 
 #[test]
-fn test_touch_updates_timestamp() {
-    let mut entry =
-        PasswordEntry::new("test.com".to_string(), "user".to_string(), vec![1], vec![2]);
+fn touch_updates_timestamp() {
+    let mut entry = PasswordEntry::new(
+        "test.com".to_string(),
+        "user".to_string(),
+        vec![1],
+        vec![2],
+    );
 
     let old_updated = entry.updated_at.clone();
     std::thread::sleep(std::time::Duration::from_millis(10));
@@ -40,18 +39,21 @@ fn test_touch_updates_timestamp() {
 }
 
 #[test]
-fn test_is_persisted() {
-    let mut entry =
-        PasswordEntry::new("test.com".to_string(), "user".to_string(), vec![1], vec![2]);
+fn is_persisted() {
+    let mut entry = PasswordEntry::new(
+        "test.com".to_string(),
+        "user".to_string(),
+        vec![1],
+        vec![2],
+    );
 
     assert!(!entry.is_persisted());
-
     entry.id = Some(1);
     assert!(entry.is_persisted());
 }
 
 #[test]
-fn test_summary_format() {
+fn summary_format() {
     let entry = PasswordEntry::new(
         "github.com".to_string(),
         "john".to_string(),
@@ -62,12 +64,9 @@ fn test_summary_format() {
     assert_eq!(entry.summary(), "github.com (john)");
 }
 
-// ============================================================================
 // SearchFilter Tests
-// ============================================================================
-
 #[test]
-fn test_search_filter_builder() {
+fn search_filter_builder() {
     let filter = SearchFilter::new()
         .with_website("github")
         .with_username("john");
@@ -78,35 +77,30 @@ fn test_search_filter_builder() {
 }
 
 #[test]
-fn test_empty_search_filter() {
+fn empty_search_filter() {
     let filter = SearchFilter::new();
     assert!(!filter.is_active());
 }
 
 #[test]
-fn test_search_filter_with_only_website() {
+fn search_filter_with_only_website() {
     let filter = SearchFilter::new().with_website("github");
-
     assert_eq!(filter.website_query, Some("github".to_string()));
     assert!(filter.username_query.is_none());
     assert!(filter.is_active());
 }
 
 #[test]
-fn test_search_filter_with_only_username() {
+fn search_filter_with_only_username() {
     let filter = SearchFilter::new().with_username("john");
-
     assert_eq!(filter.username_query, Some("john".to_string()));
     assert!(filter.website_query.is_none());
     assert!(filter.is_active());
 }
 
-// ============================================================================
 // VaultConfig Tests
-// ============================================================================
-
 #[test]
-fn test_vault_config_default() {
+fn vault_config_default() {
     let config = VaultConfig::default();
 
     assert_eq!(config.memory_cost, 19456);
@@ -117,7 +111,7 @@ fn test_vault_config_default() {
 }
 
 #[test]
-fn test_vault_config_can_be_modified() {
+fn vault_config_can_be_modified() {
     let mut config = VaultConfig::default();
 
     config.memory_cost = 4096;
@@ -129,12 +123,9 @@ fn test_vault_config_can_be_modified() {
     assert_eq!(config.parallelism, 2);
 }
 
-// ============================================================================
-// Edge Cases Tests
-// ============================================================================
-
+// Edge Cases
 #[test]
-fn test_password_entry_with_empty_fields() {
+fn password_entry_with_empty_fields() {
     let entry = PasswordEntry::new("".to_string(), "".to_string(), vec![], vec![]);
 
     assert_eq!(entry.website, "");
@@ -145,7 +136,7 @@ fn test_password_entry_with_empty_fields() {
 }
 
 #[test]
-fn test_password_entry_with_long_fields() {
+fn password_entry_with_long_fields() {
     let long_website = "a".repeat(1000);
     let long_username = "b".repeat(1000);
 

@@ -1,37 +1,34 @@
-// Import our library
-use passman::crypto::{generate_password, encrypt_password, decrypt_password, derive_key, generate_salt};
+//! PassMan CLI - Secure Password Manager
+
+use passman::db::Database;
+use passman::models::PasswordEntry;
 
 fn main() {
     println!("🔐 PassMan - Secure Password Manager");
-    println!("✅ Step 3 complete - Cryptography is working!\n");
+    println!("✅ Step 4 complete - Database module is working!\n");
     
-    demo_password_generation();
-    demo_encryption_decryption();
+    demo_database().unwrap();
 }
 
-fn demo_password_generation() {
-    println!("🔑 Password Generation:");
+fn demo_database() -> Result<(), Box<dyn std::error::Error>> {
+    let db = Database::new("test.db")?;
     
-    let password = generate_password(20, true).unwrap();
-    println!("  • Generated: {}", password);
-    println!("  • Length: {}", password.len());
-    println!();
-}
-
-fn demo_encryption_decryption() {
-    println!("🔒 Encryption/Decryption Demo:");
+    let entry = PasswordEntry::new(
+        "github.com".to_string(),
+        "john_doe".to_string(),
+        vec![1, 2, 3, 4],
+        vec![5, 6, 7, 8],
+    );
     
-    let master_password = "my_strong_master_password";
-    let salt = generate_salt();
-    let key = derive_key(master_password, &salt).unwrap();
+    db.insert(&entry)?;
+    println!("📝 Inserted: {}", entry.summary());
     
-    let original = "my_secret_password123!";
-    println!("  • Original: {}", original);
+    let entries = db.get_all()?;
+    println!("📋 Total entries: {}", entries.len());
     
-    let (encrypted, nonce) = encrypt_password(original, &key).unwrap();
-    println!("  • Encrypted: {} bytes", encrypted.len());
+    for e in entries {
+        println!("  • {} - {}", e.website, e.username);
+    }
     
-    let decrypted = decrypt_password(&encrypted, &key, &nonce).unwrap();
-    println!("  • Decrypted: {}", decrypted);
-    println!("  • Success: {}", original == decrypted);
+    Ok(())
 }

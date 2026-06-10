@@ -7,7 +7,7 @@ description = "A secure, memory-safe password manager written in Rust"
 repository = "https://github.com/jawadtik06/passman"
 license = "MIT"
 keywords = ["password-manager", "security", "encryption", "cli"]
-categories = ["command-line-utilities", "cryptography", "GUI"]
+categories = ["command-line-utilities", "cryptography"]
 
 [dependencies]
 # Encryption & cryptography

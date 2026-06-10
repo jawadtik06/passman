@@ -1,12 +1,34 @@
-//! PassMan CLI - Secure Password Manager
+//! PassMan CLI - Professional Password Manager
 
 use passman::Cli;
 
 fn main() {
-    println!("{}", console::style("🔐 PassMan v0.1.0").bold().cyan());
-    
+    println!(
+        "{}",
+        console::style("╔════════════════════════════════════════════════════════╗").cyan()
+    );
+    println!(
+        "{}",
+        console::style("║                    P A S S M A N                       ║")
+            .cyan()
+            .bold()
+    );
+    println!(
+        "{}",
+        console::style("║            Professional Password Manager               ║").cyan()
+    );
+    println!(
+        "{}",
+        console::style("║                   Version 1.0.0                        ║").cyan()
+    );
+    println!(
+        "{}",
+        console::style("╚════════════════════════════════════════════════════════╝").cyan()
+    );
+    println!();
+
     if let Err(e) = Cli::new().and_then(|mut cli| cli.run()) {
-        eprintln!("{} {}", console::style("Error:").red().bold(), e);
+        eprintln!("\n{} {}", console::style("[ERROR]").red().bold(), e);
         std::process::exit(1);
     }
 }

@@ -19,3 +19,38 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+## Open Source Considerations
+
+### For Contributors
+- By submitting contributions, you agree to license your work under the same MIT terms
+- Attribution will be given in the project's documentation and release notes
+
+### For Users
+- You are free to use this software commercially or personally
+- You may modify and distribute modified versions
+- You must retain the copyright notice and license terms
+
+### No Liability
+This software is provided for educational and practical use. Always maintain your own backups and practice good security hygiene. The author assumes no responsibility for:
+
+- Data loss or corruption
+- Security breaches resulting from misuse
+- Damages arising from software defects
+
+### Third-Party Licenses
+This project includes dependencies under various open-source licenses:
+- Rust standard library (MIT/Apache 2.0)
+- rusqlite (MIT)
+- aes-gcm (MIT/Apache 2.0)
+- argon2 (MIT/Apache 2.0)
+- dialoguer, console (MIT)
+- Other dependencies as specified in Cargo.toml
+
+---
+
+**Questions?** Contact: [jawadelfidali@gmail.com]
+
+**Project Home:** https://github.com/jawadtik06/passman
